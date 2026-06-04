@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<form id="form">
+  <input name="username" placeholder="Username" />
+  <input name="email" placeholder="Email" />
+  <button type="submit">Submit</button>
+</form>
+
+<script>
+document.getElementById("form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const data = {
+    username: e.target.username.value,
+    email: e.target.email.value
+  };
+
+  await fetch("http://localhost:3000/api/users", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  });
+
+  alert("Data saved!");
+});
+</script>
+
+</body>
+</html>
