@@ -5,6 +5,8 @@ const db=require('./db');
 const Person=require('./models/Person');
 const MenuItem=require('./models/Menu');
 
+require('dotenv').config();
+
 const bodyParser=require('body-parser');
 app.use(bodyParser.json()); //data stores in req.body
 
@@ -46,8 +48,8 @@ app.use('/menu',menuRoutes);
 //   res.send("Data received");
 // });
 
-
-app.listen(3000, () => {
+const PORT=process.env.PORT || 3000;
+app.listen(PORT, () => {
   console.log('Server is running on http://localhost:3000');
 })
 
