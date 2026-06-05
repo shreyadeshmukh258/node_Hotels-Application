@@ -29,6 +29,7 @@ router.get('/',async (req,res)=>{
 })
 
 router.get('/:tasteType',async (req,res)=>{
+  //try catch block for exception handling 
     try{
         const tasteType=req.params.tasteType;
         if(tasteType=='sweet'||tasteType=='spicy'||tasteType=='sour')
@@ -37,6 +38,7 @@ router.get('/:tasteType',async (req,res)=>{
           console.log("Response fetched");
           res.status(200).json(response);
         }else{
+          //It shows Error message and status as 404
           res.status(404).json({Error:'invalid tasteType'});
         }
 
@@ -45,6 +47,7 @@ router.get('/:tasteType',async (req,res)=>{
        res.status(500).json({error:'Internal server error'});
     }
 })
+
 
 //here we export router
 module.exports=router;
