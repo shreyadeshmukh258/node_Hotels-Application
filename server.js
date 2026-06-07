@@ -2,14 +2,25 @@ const express=require('express');
 
 const app = express();
 const db=require('./db');
-const Person=require('./models/Person');
 const MenuItem=require('./models/Menu');
-
 require('dotenv').config();
+
+const passport=require('./auth');
+
 
 const bodyParser=require('body-parser');
 app.use(bodyParser.json()); //data stores in req.body
 
+//Middleware Function
+const logRequest=(req,res,next)=>{
+  console.log(`${new Date().toLocaleString()} Request made to ${req.originalUrl}`);
+  next();   //Move to the next phase
+}
+app.use(logRequest);
+
+app.use(passport.initialize());
+
+const localAuthMiddleware=passport.authenticate('local',{session:false});
 app.get('/', (req, res) => {
   res.send('welcome to hotel ...,how i can help you');
 });
@@ -20,7 +31,7 @@ const personRoutes=require('./routes/personRoutes');
 const menuRoutes=require('./routes/menuRoutes');
 
 //use the routes
-app.use('/person',personRoutes);
+app.use('/person',localAuthMiddleware,personRoutes);
 app.use('/menu',menuRoutes);
 
 
